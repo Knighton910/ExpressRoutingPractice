@@ -1,10 +1,23 @@
 const express = require('express')
+const path = require('path')
+const logger = require('morgan')
+const apiRouter = require('./routes/api_router.js')
+const catRouter = require('./routes/cat_router.js')
+
 const app = express()
+
+const staticPath = path.resolve(__dirname, 'static')
+
+// 3rd middleware
+app.use(logger('tiny'))
 
 // EndPoint route
 app.get('/', (req, res) => {
     res.send("Welcome to Olivia's homepage")
 })
+
+app.use('/api', apiRouter)
+app.use('/cat', catRouter)
 
 // error handler
 app.use((req, res) => {
